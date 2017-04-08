@@ -2,16 +2,18 @@
 {
     using System;
     using System.IO;
+    using System.Text;
     using System.Threading.Tasks;
     using System.Xml;
     using System.Xml.Serialization;
 
     public sealed class XmlSerializerFactory : ISerializerFactory, IDeserializerFactory
     {
-        public XmlReaderSettings ReaderSettings { get; } = new XmlReaderSettings();
+        public XmlReaderSettings ReaderSettings { get; } = new XmlReaderSettings {};
         public XmlWriterSettings WriterSettings { get; } = new XmlWriterSettings {
             Indent = true,
             Async = true,
+            Encoding = Encoding.UTF8,
         };
 
         public Func<Stream, Task<T>> MakeDeserializer<T>()
@@ -36,7 +38,7 @@
             var writerSettings = this.WriterSettings.Clone();
             return async (stream, value) => {
                 using (var xmlWriter = XmlWriter.Create(stream, writerSettings)) {
-                    serializer.Serialize(stream, value);
+                    serializer.Serialize(xmlWriter, value);
                     if (writerSettings.Async)
                         await xmlWriter.FlushAsync().ConfigureAwait(false);
                     else
