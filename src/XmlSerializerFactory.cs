@@ -11,6 +11,7 @@
         public XmlReaderSettings ReaderSettings { get; } = new XmlReaderSettings();
         public XmlWriterSettings WriterSettings { get; } = new XmlWriterSettings {
             Indent = true,
+            Async = true,
         };
 
         public Func<Stream, Task<T>> MakeDeserializer<T>()
@@ -36,7 +37,10 @@
             return async (stream, value) => {
                 using (var xmlWriter = XmlWriter.Create(stream, writerSettings)) {
                     serializer.Serialize(stream, value);
-                    await xmlWriter.FlushAsync().ConfigureAwait(false);
+                    if (writerSettings.Async)
+                        await xmlWriter.FlushAsync().ConfigureAwait(false);
+                    else
+                        xmlWriter.Flush();
                 }
             };
         }
