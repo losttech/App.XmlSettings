@@ -1,11 +1,11 @@
 ﻿namespace LostTech.App
 {
+    using System.IO;
     using JetBrains.Annotations;
-    using PCLStorage;
 
     public static class XmlSettings
     {
-        public static Settings Create([NotNull] IFolder folder, IFreezerFactory freezerFactory = null)
+        public static Settings Create([NotNull] DirectoryInfo folder, IFreezerFactory freezerFactory = null)
         {
             freezerFactory = freezerFactory ?? ClonableFreezerFactory.Instance;
             var serializerFactory = new XmlSerializerFactory();
