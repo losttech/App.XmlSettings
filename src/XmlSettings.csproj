@@ -15,7 +15,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LostTech.App.Settings" Version="0.4.0-*" />
+    <PackageReference Include="LostTech.App.Settings" Version="0.4.0" />
     <PackageReference Include="System.Xml.XmlSerializer" Version="4.3.0" />
   </ItemGroup>
 
