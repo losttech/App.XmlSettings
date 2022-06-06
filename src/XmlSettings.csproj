@@ -4,19 +4,29 @@
     <TargetFramework>netstandard1.4</TargetFramework>
     <AssemblyName>LostTech.App.XmlSettings</AssemblyName>
     <RootNamespace>LostTech.App</RootNamespace>
-    <VersionPrefix>0.2</VersionPrefix>
-    <AssemblyVersion>0.2</AssemblyVersion>
-    <Authors>Victor Milovanov</Authors>
+    <LangVersion>10.0</LangVersion>
+    <Nullable>enable</Nullable>
+
+    <VersionPrefix>0.3</VersionPrefix>
+    <AssemblyVersion>0.3</AssemblyVersion>
+    <Authors>Victor Nova</Authors>
     <Company>Lost Tech LLC</Company>
     <Product>LostTech.App</Product>
     <Description>Provides XML serializer for LostTech.App.Settings</Description>
     <RepositoryType>git</RepositoryType>
     <PackageTags>app settings async autosave xml</PackageTags>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
+
+    <!-- The following is recommended for public projects -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <DebugSymbols>true</DebugSymbols>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LostTech.App.Settings" Version="0.4.0" />
+    <PackageReference Include="LostTech.App.Settings" Version="0.5.0" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
     <PackageReference Include="System.Xml.XmlSerializer" Version="4.3.0" />
   </ItemGroup>
 

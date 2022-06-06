@@ -21,13 +21,11 @@
             var serializer = new XmlSerializer(typeof(T));
             var readerSettings = this.ReaderSettings.Clone();
             return stream => {
-                using (var xmlReader = XmlReader.Create(stream, readerSettings)) {
-                    try {
-                        return Task.FromResult((T) serializer.Deserialize(xmlReader));
-                    }
-                    catch (InvalidOperationException formatException) {
-                        throw new FormatException(formatException.Message, formatException);
-                    }
+                using var xmlReader = XmlReader.Create(stream, readerSettings);
+                try {
+                    return Task.FromResult((T)serializer.Deserialize(xmlReader));
+                } catch (InvalidOperationException formatException) {
+                    throw new FormatException(formatException.Message, formatException);
                 }
             };
         }
@@ -37,13 +35,12 @@
             var serializer = new XmlSerializer(typeof(T));
             var writerSettings = this.WriterSettings.Clone();
             return async (stream, value) => {
-                using (var xmlWriter = XmlWriter.Create(stream, writerSettings)) {
-                    serializer.Serialize(xmlWriter, value);
-                    if (writerSettings.Async)
-                        await xmlWriter.FlushAsync().ConfigureAwait(false);
-                    else
-                        xmlWriter.Flush();
-                }
+                using var xmlWriter = XmlWriter.Create(stream, writerSettings);
+                serializer.Serialize(xmlWriter, value);
+                if (writerSettings.Async)
+                    await xmlWriter.FlushAsync().ConfigureAwait(false);
+                else
+                    xmlWriter.Flush();
             };
         }
     }
