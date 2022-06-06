@@ -6,6 +6,7 @@
     <RootNamespace>LostTech.App</RootNamespace>
     <LangVersion>10.0</LangVersion>
     <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
 
     <VersionPrefix>0.3</VersionPrefix>
     <AssemblyVersion>0.3</AssemblyVersion>

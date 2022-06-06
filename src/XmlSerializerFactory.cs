@@ -7,15 +7,27 @@
     using System.Xml;
     using System.Xml.Serialization;
 
+    /// <summary>
+    /// <see cref="XmlSerializer"/>-based implementation for <see cref="ISerializerFactory"/>
+    /// and <see cref="IDeserializerFactory"/> required for <see cref="Settings"/>.
+    /// </summary>
+    /// <remarks>The simplest way to use this is via <see cref="XmlSettings.Create(System.IO.DirectoryInfo, IFreezerFactory?)"/></remarks>
     public sealed class XmlSerializerFactory : ISerializerFactory, IDeserializerFactory
     {
+        /// <summary>
+        /// XML reading settings
+        /// </summary>
         public XmlReaderSettings ReaderSettings { get; } = new XmlReaderSettings {};
+        /// <summary>
+        /// XML writing settings.
+        /// </summary>
         public XmlWriterSettings WriterSettings { get; } = new XmlWriterSettings {
             Indent = true,
             Async = true,
             Encoding = Encoding.UTF8,
         };
 
+        /// <inheritdoc/>
         public Func<Stream, Task<T>> MakeDeserializer<T>()
         {
             var serializer = new XmlSerializer(typeof(T));
@@ -30,6 +42,7 @@
             };
         }
 
+        /// <inheritdoc/>
         public Func<Stream, T, Task> MakeSerializer<T>()
         {
             var serializer = new XmlSerializer(typeof(T));
